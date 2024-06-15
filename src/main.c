@@ -26,12 +26,14 @@ SPDX-License-Identifier: MIT
 /* === Headers files inclusions =============================================================== */
 
 #include "main.h"
-#include "gpio.h"
+#include "inc\gpio.h"
 
 /* === Macros definitions ====================================================================== */
 
-#define LED_ROJO_PUERTO 1
-#define LED_ROJO_BIT    7
+#define RED_LED_PORT 1
+#define RED_LED_BIT  7
+
+#define SLEEP_PERIOD 1
 
 /* === Private data type declarations ========================================================== */
 
@@ -48,16 +50,20 @@ SPDX-License-Identifier: MIT
 /* === Public function implementation ========================================================== */
 
 int main(void) {
-    // Configuro como salida
-    gpioSetDirection(LED_ROJO_PUERTO, LED_ROJO_BIT, true);
-    // Prendo el led
-    gpioSetOutput(LED_ROJO_PUERTO, LED_ROJO_BIT, true);
 
-    gpio_t led_rojo = gpioCreate(LED_ROJO_PUERTO, LED_ROJO_BIT);
-    gpioSetOutput(led_rojo, true);
-    gpioSetState(led_rojo, true);
+    gpio_t red_led = gpioCreate(RED_LED_PORT, RED_LED_BIT);
 
-    led_rojo.gpioSetState(true)
+    gpioSetOutput(red_led, true);
+    gpioSetState(red_led, true);
+
+    for (int i = 0; i < 5; i++) {
+        // Toggle the LED state
+        gpioSetState(red_led, !gpioGetState(red_led));
+
+        // Wait for SLEEP_PERIOD microseconds
+        sleep(SLEEP_PERIOD);
+    }
+    return 0;
 }
 
 /* === End of documentation ==================================================================== */

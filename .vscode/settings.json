@@ -8,5 +8,10 @@
         "editor.wordBasedSuggestions": "off",
         "editor.suggest.insertMode": "replace",
         "editor.semanticHighlighting.enabled": true
+    },
+    "files.associations": {
+        "gpio.h": "c",
+        "stddef.h": "c",
+        "main.h": "c"
     }
 }
